@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+struct student {
+    char name[100];
+    int phone;
+    char usn[20];
+};
+
+int main() {
+    struct student s;
+
+    printf("Enter student name: ");
+    scanf("%s", s.name);  
+
+    printf("Enter phone number: ");
+    scanf("%d", &s.phone);  
+
+    printf("Enter USN: ");
+    scanf("%s", s.usn);
+
+    printf("\nStudent Details:\n");
+    printf("Name: %s\n", s.name);
+    printf("Phone: %d\n", s.phone);
+    printf("USN: %s\n", s.usn);
+
+    return 0;
+}
