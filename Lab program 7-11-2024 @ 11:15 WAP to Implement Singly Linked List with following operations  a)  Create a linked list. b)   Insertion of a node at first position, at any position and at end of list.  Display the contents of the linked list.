@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+
+struct Node* create_list(int values[], int n) {
+    struct Node* head = NULL;
+    struct Node* temp = NULL;
+    struct Node* p = NULL;
+
+    for (int i = 0; i < n; i++) {
+        temp = (struct Node*)malloc(sizeof(struct Node));
+        temp->data = values[i];
+        temp->next = NULL;
+        if (head == NULL) {
+            head = temp;
+        } else {
+            p = head;
+            while (p->next != NULL) {
+                p = p->next;
+            }
+            p->next = temp;
+        }
+    }
+    return head;
+}
+
+
+struct Node* insert_at_first(struct Node* head, int data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = data;
+    new_node->next = head;
+    head = new_node;
+    return head;
+}
+
+
+struct Node* insert_at_position(struct Node* head, int data, int position) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = data;
+    
+
+    if (position == 0) {
+        new_node->next = head;
+        head = new_node;
+        return head;
+    }
+
+    struct Node* current = head;
+    for (int i = 0; i < position - 1 && current != NULL; i++) {
+        current = current->next;
+    }
+
+   
+    if (current == NULL) {
+        printf("Position out of bounds.\n");
+        free(new_node);
+        return head;
+    }
+
+    new_node->next = current->next;
+    current->next = new_node;
+    return head;
+}
+
+
+struct Node* insert_at_end(struct Node* head, int data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* last = head;
+    new_node->data = data;
+    new_node->next = NULL;
+
+    if (head == NULL) {
+        head = new_node;
+        return head;
+    }
+
+    while (last->next != NULL) {
+        last = last->next;
+    }
+
+    last->next = new_node;
+    return head;
+}
+
+
+void display(struct Node* head) {
+    if (head == NULL) {
+        printf("The list is empty.\n");
+        return;
+    }
+    struct Node* current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+
+    int values[] = {10, 20, 30};
+    head = create_list(values, 3);
+    printf("Linked List after creation:\n");
+    display(head);
+
+    head = insert_at_first(head, 5);
+    printf("\nLinked List after inserting 5 at the beginning:\n");
+    display(head);
+
+    head = insert_at_end(head, 40);
+    printf("\nLinked List after inserting 40 at the end:\n");
+    display(head);
+
+    head = insert_at_position(head, 25, 2);
+    printf("\nLinked List after inserting 25 at position 2:\n");
+    display(head);
+
+    head = insert_at_position(head, 50, 10);
+    printf("\nLinked List after attempting to insert 50 at position 10:\n");
+    display(head);
+
+    return 0;
+}
