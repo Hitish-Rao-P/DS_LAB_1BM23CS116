@@ -1,0 +1,24 @@
+bool backspaceCompare(char* s, char* t) {
+        
+    void reduceString(char *str) {
+        int top=0;
+        for (int i = 0; str[i] != '\0'; i++) {
+            if (str[i] == '#') {
+                
+                if (top > 0) {
+                    (top)--;  
+                }
+            } else {
+                str[top] = str[i];
+                (top)++;
+            }
+        }
+        str[top] = '\0';
+    }
+    
+    reduceString(s);
+    reduceString(t);
+    return strcmp(s,t)==0;
+    
+}
+
